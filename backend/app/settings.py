@@ -20,6 +20,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'schema_viewer',
+
     'corsheaders',
     'rest_framework',
     'django_filters',
@@ -127,6 +129,7 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "http://localhost:3000",
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
