@@ -44,13 +44,13 @@ class AdminLoginViewSet(APIView):
                     "message": "Access denied. This login is for admin users only.",
                 }, status=status.HTTP_403_FORBIDDEN)
             
-            if not user.is_active:
+            if not user.is_actived:
                 return Response({
                     "success": False,
                     "message": "Your account is inactive. Please contact support."
                 }, status=status.HTTP_400_BAD_REQUEST)
             
-            if user.is_block:
+            if user.is_blocked:
                 return Response({
                     "success": False,
                     "message": "Your account is blocked. Please contact support."
@@ -104,13 +104,13 @@ class LoginViewSet(APIView):
                     "message": "No account found with this email address.",
                 }, status=status.HTTP_401_UNAUTHORIZED)
             
-            if not user.is_active:
+            if not user.is_actived:
                 return Response({
                     "success": False,
                     "message": "Your account is inactive. Please contact support."
                 }, status=status.HTTP_400_BAD_REQUEST)
             
-            if user.is_block:
+            if user.is_blocked:
                 return Response({
                     "success": False,
                     "message": "Your account is blocked. Please contact support."
@@ -142,7 +142,7 @@ class LoginViewSet(APIView):
                 "error": f"An error occurred: {str(e)}.",
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-class RegisterViewSet(viewsets.ViewSet):
+class RegisterViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
 
     def create(self, request, *args, **kwargs):

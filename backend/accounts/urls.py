@@ -1,11 +1,10 @@
 from django.urls import path
-from rest_framework.routers import DefaultRouter
-from accounts.views import RegisterViewSet, LoginViewSet, AdminLoginViewSet
+from accounts.views import LoginViewSet, AdminLoginViewSet, RegisterViewSet
 
-router = DefaultRouter()
-router.register(r'user/register', RegisterViewSet, basename='register')
+app_name = 'accounts'
 
-urlpatterns = router.urls + [
-    path('dashboard/login/', AdminLoginViewSet.as_view(), name='dashboard-login'),
-    path('user/login/', LoginViewSet.as_view(), name='login'),
+urlpatterns = [
+    path('login/', LoginViewSet.as_view(), name='user_login'),
+    path('admin/login/', AdminLoginViewSet.as_view(), name='admin_login'),
+    path('user/register/', RegisterViewSet.as_view({'post': 'create'}), name='user_register'),
 ]

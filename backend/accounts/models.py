@@ -1,104 +1,76 @@
 from django.db import models
 from django.core.validators import MinLengthValidator, RegexValidator
-from django.contrib.auth.models import AbstractBaseUser
-from app.utils import validate_email, generate_slug, validate_alpha
-from accounts.utils import USER_DIRECTORY_PATH
-from accounts.managers import UserManager
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.utils.translation import gettext_lazy as _
+from accounts.managers import UserManager
+from accounts.utils import USER_DIRECTORY_PATH, ROLES, GENDERS
+from app.utils import validate_email, generate_slug, validate_alpha
 
-# Create your models here.
-
-ROLES = [
-    ('user', 'User'),
-    ('admin', 'Admin'),
-]
-
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     image = models.ImageField(
         upload_to=USER_DIRECTORY_PATH,
         null=True,
         blank=True,
-        verbose_name=_('Image'),
-        help_text=_('Upload your photo...'),
     )
     username = models.CharField(
         unique=True,
+        max_length=40,
         validators=[
             MinLengthValidator(3),
             RegexValidator(
                 regex=r'^[a-zA-Z0-9_]+$',
-                message='Username can only contain letters, numbers, and underscores.',
+                message=_('Username can only contain letters, numbers, and underscores.'),
             ),
         ],
-        max_length=40,
         db_index=True,
-        verbose_name=_('Username'),
-        help_text=_('Enter your username...'),
     )
     slug = models.SlugField(
         unique=True,
         max_length=50,
         editable=False,
-        null=True,
-        blank=True,
     )
     email = models.EmailField(
         unique=True,
         validators=[MinLengthValidator(10), validate_email],
         db_index=True,
-        verbose_name=_('Email Address'),
-        help_text=_('Enter your email address...'),
     )
     first_name = models.CharField(
-        max_length=30,
+        max_length=20,
         validators=[MinLengthValidator(3), validate_alpha],
         blank=True,
-        null=True,
-        verbose_name=_('First Name'),
-        help_text=_('Enter your first name...'),
+        db_index=True,
     )
     last_name = models.CharField(
-        max_length=30,
+        max_length=20,
         validators=[MinLengthValidator(3), validate_alpha],
         blank=True,
-        null=True,
-        verbose_name=_('Last Name'),
-        help_text=_('Enter your last name...'),
+        db_index=True,
+    )
+    number = models.CharField(
+        max_length=11,
+        validators=[MinLengthValidator(11)],
+        blank=True,
+        db_index=True,
+    )
+    gender = models.CharField(
+        max_length=10,
+        choices=GENDERS,
+        blank=True,
     )
     role = models.CharField(
         max_length=10,
-        default='user',
         choices=ROLES,
-        verbose_name=_('Role'),
-        help_text=_('Enter your role...'),
+        default='user',
     )
-    terms_accepted = models.BooleanField(
-        default=False
-    )
-    is_staff = models.BooleanField(
-        default=False,
-        verbose_name=_('Is Staff'),
-    )
-    is_active = models.BooleanField(
-        default=True,
-        verbose_name=_('Is Active'),
-    )
-    is_block = models.BooleanField(
-        default=False,
-        verbose_name=_('Is Block'),
-    )
-    is_superuser = models.BooleanField(
-        default=False,
-        verbose_name=_('Is Admin'),
-    )
-    date_joined = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name=_('Joined Date'),
-    )
+    terms_accepted = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_blocked = models.BooleanField(default=False)
+    date_joined = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username',]
+    REQUIRED_FIELDS = ['username']
 
     objects = UserManager()
 
@@ -107,7 +79,13 @@ class User(AbstractBaseUser):
 
     def save(self, *args, **kwargs):
         if self.username:
-            self.slug = generate_slug(self.username)
+            base_slug = generate_slug(self.username)
+            slug = base_slug
+            i = 1
+            while User.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{i}"
+                i += 1
+            self.slug = slug
         super().save(*args, **kwargs)
 
     def delete(self, using=None, keep_parents=False):
@@ -122,7 +100,7 @@ class User(AbstractBaseUser):
         refresh = RefreshToken.for_user(self)
         return {
             'refresh_token': str(refresh),
-            'access_token': str(refresh.access_token)
+            'access_token': str(refresh.access_token),
         }
 
     def __str__(self):

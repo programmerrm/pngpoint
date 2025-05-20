@@ -16,5 +16,5 @@ def validate_email(value):
 
 def validate_terms_accepted(value):
     if not value:
-        raise serializers.ValidationError("You must agree to the Terms & Conditions.")
+        raise serializers.ValidationError(_("You must agree to the Terms & Conditions."))
     return value
