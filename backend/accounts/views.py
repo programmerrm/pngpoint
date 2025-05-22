@@ -44,13 +44,13 @@ class AdminLoginViewSet(APIView):
                     "message": "Access denied. This login is for admin users only.",
                 }, status=status.HTTP_403_FORBIDDEN)
             
-            if not user.is_actived:
+            if not user.is_active:
                 return Response({
                     "success": False,
                     "message": "Your account is inactive. Please contact support."
                 }, status=status.HTTP_400_BAD_REQUEST)
             
-            if user.is_blocked:
+            if user.is_block:
                 return Response({
                     "success": False,
                     "message": "Your account is blocked. Please contact support."

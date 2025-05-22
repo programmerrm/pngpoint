@@ -7,7 +7,7 @@ export const authApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         addLogin: builder.mutation<AuthResponseType, LoginPropsType>({
             query: (data) => ({
-                url: "/account/dashboard/login/",
+                url: "/accounts/admin/login/",
                 method: "POST",
                 body: data,
             }),

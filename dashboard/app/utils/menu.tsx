@@ -9,7 +9,7 @@ export const Menu: MenuType[] = [
     {
         id: 2,
         name: "upload images",
-        path: "/upload-images/",
+        path: "/images/",
     },
     {
         id: 3,

@@ -136,4 +136,6 @@ body {
 
 .login {background: linear-gradient(to bottom, #1dada4, #84a3db);}
 
-
+.scrollbar-width::-webkit-scrollbar {
+  width: 0px;
+}
