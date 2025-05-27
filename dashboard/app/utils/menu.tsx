@@ -1,59 +1,66 @@
+import { ReactIcons } from "~/lib/reactIcons";
 import type { MenuType } from "~/types/menuType";
+const { IoIosSettings, IoMdCloudUpload, BiSolidDashboard, FiLoader, IoMdClose, AiOutlineCheck, FaImages, TbArrowsExchange, ImProfile, FaUsersCog } = ReactIcons;
 
 export const Menu: MenuType[] = [
     {
         id: 1,
         name: "dashboard",
         path: "/",
+        icon: <BiSolidDashboard className="text-2xl" />,
     },
     {
         id: 2,
-        name: "upload images",
+        name: "Total images",
         path: "/images/",
+        icon: <FaImages className="text-[21px]" />
     },
     {
         id: 3,
-        name: "approved images",
-        path: "/approved-list/",
+        name: "upload images",
+        path: "/upload-images/",
+        icon: <IoMdCloudUpload className="text-2xl" />
     },
     {
         id: 4,
-        name: "pending images",
-        path: "/pending-list/",
+        name: "approved images",
+        path: "/approved-list/",
+        icon: <AiOutlineCheck className="text-[22px]" />
     },
     {
         id: 5,
-        name: "rejected images",
-        path: "/rejected-list/",
+        name: "pending images",
+        path: "/pending-list/",
+        icon: <FiLoader className="text-2xl" />
     },
     {
         id: 6,
-        name: "add category",
-        path: "/add-category/",
+        name: "rejected images",
+        path: "/rejected-list/",
+        icon: <IoMdClose className="text-[26px]" />
     },
     {
         id: 7,
-        name: "categories",
-        path: "/categories/",
-    },
-    {
-        id: 8,
         name: "settings",
+        icon: <IoIosSettings className="text-2xl" />,
         submenu: [
             {
                 id: 1,
                 name: "profile",
                 path: "/profile/",
-            },
-            {
-                id: 1,
-                name: "chnage password",
-                path: "/chnage-password/",
+                icon: <ImProfile className="text-lg" />
             },
             {
                 id: 2,
+                name: "chnage password",
+                path: "/chnage-password/",
+                icon: <TbArrowsExchange className="text-2xl" />
+            },
+            {
+                id: 3,
                 name: "users",
                 path: "/users/",
+                icon: <FaUsersCog />
             },
         ],
     },

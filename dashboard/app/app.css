@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -126,16 +126,26 @@ body {
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+    * {
+        @apply border-border outline-ring/50;
     }
-  body {
-    @apply bg-background text-foreground;
+    body {
+        @apply bg-background text-foreground;
     }
 }
 
-.login {background: linear-gradient(to bottom, #1dada4, #84a3db);}
+.login {
+    background: linear-gradient(to bottom, #1dada4, #84a3db);
+}
 
 .scrollbar-width::-webkit-scrollbar {
-  width: 0px;
+    width: 0px;
+}
+
+.btn-style span:first-child {
+    transform: translateX(-101%);
+    transition: transform 0.3s ease-in;
+}
+.btn-style:hover span {
+    transform: translateX(0);
 }

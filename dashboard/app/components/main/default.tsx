@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 export const Default:React.FC = () => {
     return (
-        <div className="flex flex-col flex-wrap items-center justify-center space-y-20 px-10 w-full h-[82%]">
+        <div className="flex flex-col flex-wrap items-center justify-center space-y-20 w-full h-[82%]">
             <div className="grid grid-cols-2 gap-20 py-10 px-8 w-full rounded-sm bg-[#F4F3F9]">
                 <Link className="bg-[#0F1932] text-white py-10 px-8 rounded-sm" to={"/images/"}>
                     <div className="flex flex-col flex-wrap gap-y-1">

@@ -3,6 +3,5 @@ import type { RootState } from "~/redux/store"
 
 export const useAuth = (): boolean => {
     const { admin, tokens } = useSelector((state: RootState) => state.auth);
-    console.log("useAuth", admin, tokens);
     return Boolean(admin && tokens?.access_token);
 }

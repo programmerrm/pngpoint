@@ -2,8 +2,8 @@ from django.contrib.auth import get_user_model
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from accounts.serializers import LoginSerializer, RegisterSerializer
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from accounts.serializers import LoginSerializer, RegisterSerializer, ChangePasswordSerializer, AdminProfileSerializer, AdminProfileUpdatedSerializer
 
 User = get_user_model()
 
@@ -166,3 +166,42 @@ class RegisterViewSet(viewsets.ModelViewSet):
                 "message": "Something went wrong on the server.",
                 "error": f"An error occurred: {str(e)}.",
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class ChangePasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, *args, **kwargs):
+        serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                "success": True,
+                "message": "Password changed successfully",
+            }, status=status.HTTP_200_OK)
+        return Response({
+            "success": False,
+            "errors": serializer.errors
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+class AdminProfileViewSet(viewsets.ModelViewSet):
+    serializer_class = AdminProfileSerializer
+    permission_classes = [IsAdminUser]
+
+    def get_queryset(self):
+        return User.objects.filter(id=self.request.user.id)
+
+    def perform_update(self, serializer):
+        serializer.save()
+
+class AdminProfileUpdatedViewSet(viewsets.ModelViewSet):
+    serializer_class = AdminProfileUpdatedSerializer
+    permission_classes = [IsAdminUser]
+
+    def get_queryset(self):
+        return User.objects.filter(id=self.request.user.id)
+
+    def get_object(self):
+        return self.request.user
+
+    def perform_update(self, serializer):
+        serializer.save()

@@ -2,6 +2,7 @@ import type { AuthResponseType } from "~/types/authResponseType";
 import { apiSlice } from "../api/apiSlice";
 import { setAuth } from "./authSlice";
 import type { LoginPropsType } from "~/types/loginType";
+import type { PasswordChangeType } from "~/types/passwordChangeType";
 
 export const authApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -28,7 +29,14 @@ export const authApi = apiSlice.injectEndpoints({
                 }
             },
         }),
+        adminPasswordChange: builder.mutation<void, PasswordChangeType>({
+            query: (data) => ({
+                url: "/accounts/password-change/",
+                method: "PUT",
+                body: data,
+            }),
+        }),
     }),
 });
 
-export const { useAddLoginMutation } = authApi;
+export const { useAddLoginMutation, useAdminPasswordChangeMutation } = authApi;
