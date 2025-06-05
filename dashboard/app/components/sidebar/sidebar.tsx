@@ -13,7 +13,7 @@ export const Sidebar: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col w-full h-full py-2.5 px-5 space-y-5 text-white bg-[#0077A2]">
+        <div className="flex flex-col h-full py-2.5 px-5 space-y-5 overflow-y-scroll overflow-x-hidden scrollbar-width text-white bg-[#0077A2]">
             <Link className="w-40 h-auto block" to={"/"}>
                 <img className="w-fit h-auto" src={PPLogo} alt="png-point" />
             </Link>
@@ -38,7 +38,7 @@ export const Sidebar: React.FC = () => {
                                     </div>
                                 </div>
                                 {openMenuId === item.id && (
-                                    <ul className="flex flex-col flex-wrap ml-7 mt-3.5 space-y-3.5 w-full">
+                                    <ul className="flex flex-col flex-wrap ml-7 mt-3.5 space-y-3.5">
                                         {item.submenu.map((sub) => (
                                             <li className="list-disc w-fit relative group" key={sub.id}>
                                                 <Link

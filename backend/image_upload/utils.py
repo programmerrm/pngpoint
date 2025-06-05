@@ -1,38 +1,36 @@
-from PIL import Image
-from PIL.ExifTags import TAGS
-import os
+import hashlib
 
-def extract_metadata(file):
-    image = Image.open(file)
-    exif_data = image.getexif()
-    metadata = {
-        "filename": file.name,
-        "width": image.width,
-        "height": image.height,
-        "size": os.path.getsize(file),
-        "format": image.format,
-        "title": "",
-        "tags": [],
-        "categories": [],
-        "keywords": []
-    }
+def GET_IMAGE_HASH(image_file):
+    hash_md5 = hashlib.md5()
+    for chunk in image_file.chunks():
+        hash_md5.update(chunk)
+    return hash_md5.hexdigest()
 
-    for tag_id, value in exif_data.items():
-        tag = TAGS.get(tag_id, tag_id)
-        if tag.lower() == "imageDescription".lower():
-            metadata["title"] = value
-        if tag.lower() == "XPKeywords".lower():
-            keywords = value.decode('utf-16-le').split(';')
-            metadata["keywords"] = [k.strip() for k in keywords if k.strip()]
-        if tag.lower() == "XPSubject".lower():
-            metadata["tags"] = value.decode('utf-16-le').split(';')
-        if tag.lower() == "XPTitle".lower():
-            metadata["categories"] = value.decode('utf-16-le').split(';')
-
-    return metadata
-
-
-STATUS = [
+STATUS_CHOICES = [
     ('pending', 'Pending'),
     ('approved', 'Approved'),
+    ('rejected', 'Rejected'),
 ]
+
+# CATEGORIES = [
+#     ('Animals', 'Animals'),
+#     ('Buildings and Architecture', 'Buildings and Architecture')
+#     ('Business', 'Business'),
+#     ('Drinks', 'Drinks'),
+#     ('The Environment', 'The Environment'),
+#     ('States of Mind', 'States of Mind'),
+#     ('Food', 'Food'),
+#     ('Graphic Resources', 'Graphic Resources'),
+#     ('Hobbies and Leisure', 'Hobbies and Leisure'),
+#     ('Industry', 'Industry'),
+#     ('Landscape', 'Landscape'),
+#     ('Lifestyle', 'Lifestyle'),
+#     ('People', 'People'),
+#     ('Plants and Flowers', 'Plants and Flowers'),
+#     ('Culture and Religion', 'Culture and Religion'),
+#     ('Science', 'Science'),
+#     ('Social Issues', 'Social Issues'),
+#     ('Sports', 'Sports'),
+#     ('Technology', 'Technology'),
+#     ('Transport', 'Transport'),
+# ]

@@ -1,21 +1,26 @@
 from rest_framework import serializers
-from .models import UploadedImage
-from PIL import Image
+from accounts.models import User
+from image_upload.models import CloudflareImageModel, CloudflareImageKeyword
 
-class UploadedImageSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UploadedImage
+        model = User
+        fields = ['id', 'image', 'username', 'slug', 'email', 'first_name', 'last_name', 'number', 'role']
+
+class CloudflareImageKeywordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CloudflareImageKeyword
         fields = '__all__'
 
+class CloudflareImageSerializer(serializers.ModelSerializer):
+    cloudflareImageKeywords = CloudflareImageKeywordSerializer(many=True, read_only=True)
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = CloudflareImageModel
+        fields = '__all__'
+        read_only_fields = ('user', 'image_id', 'url')
+
     def create(self, validated_data):
-        image_file = validated_data.get('image')
-        img = Image.open(image_file)
-        metadata = img.info
-
-        title = metadata.get('Title') or metadata.get('title') or ''
-        tags = metadata.get('Tags') or metadata.get('tags') or ''
-
-        validated_data['title'] = title
-        validated_data['tags'] = tags
-
-        return super().create(validated_data)
+        return CloudflareImageModel.objects.create(**validated_data)
+    

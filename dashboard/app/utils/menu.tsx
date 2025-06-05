@@ -24,19 +24,19 @@ export const Menu: MenuType[] = [
     {
         id: 4,
         name: "approved images",
-        path: "/approved-list/",
+        path: "/approved-images/",
         icon: <AiOutlineCheck className="text-[22px]" />
     },
     {
         id: 5,
         name: "pending images",
-        path: "/pending-list/",
+        path: "/pending-images/",
         icon: <FiLoader className="text-2xl" />
     },
     {
         id: 6,
         name: "rejected images",
-        path: "/rejected-list/",
+        path: "/rejected-images/",
         icon: <IoMdClose className="text-[26px]" />
     },
     {
