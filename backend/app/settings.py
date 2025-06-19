@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
 
     'accounts',
-    'image_upload',
+    'images',
 ]
 
 MIDDLEWARE = [

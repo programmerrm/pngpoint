@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 API_BASE_URL = 'api/v1'
 
 urlpatterns = [
-    path(f'{API_BASE_URL}/image-upload/', include('image_upload.urls')),
+    path(f'{API_BASE_URL}/images/', include('images.urls')),
     path(f'{API_BASE_URL}/accounts/', include('accounts.urls', namespace='accounts')),
     path(f'{API_BASE_URL}/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path(f'{API_BASE_URL}/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

@@ -11,15 +11,15 @@ export const Menu: MenuType[] = [
     },
     {
         id: 2,
-        name: "Total images",
-        path: "/images/",
-        icon: <FaImages className="text-[21px]" />
-    },
-    {
-        id: 3,
         name: "upload images",
         path: "/upload-images/",
         icon: <IoMdCloudUpload className="text-2xl" />
+    },
+    {
+        id: 3,
+        name: "Total images",
+        path: "/total-images/",
+        icon: <FaImages className="text-[21px]" />
     },
     {
         id: 4,

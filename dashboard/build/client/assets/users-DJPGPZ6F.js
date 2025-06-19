@@ -1,0 +1,1 @@
+import{w as e}from"./with-props-C6dPk52p.js";import{o as s}from"./chunk-D4RADZKF-CAWZMMw9.js";const l=e(function(){return s.jsx("div",{className:"flex flex-col flex-wrap px-10 py-3.5 w-full h-[82%] relative",children:s.jsx("h2",{children:"Total Users"})})});export{l as default};
