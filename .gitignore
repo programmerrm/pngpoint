@@ -1,6 +1,14 @@
+# Python
+backend/__pycache__/
+
+# Node.js dependencies and build
+client/node_modules/
+client/build/
+dashboard/node_modules/
+dashboard/build/
+
+# macOS
 .DS_Store
-/node_modules/
 
 # React Router
-/.react-router/
-/build/
+.react-router/

@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.core.validators import MinLengthValidator
-from images.utils import STATUS_CHOICES
+from images.utils.status import STATUS_CHOICES
 
 class Images(models.Model):
     user = models.ForeignKey(
@@ -9,19 +9,24 @@ class Images(models.Model):
         on_delete=models.CASCADE
     )
     image_id = models.CharField(
-        max_length=255, 
-        unique=True
+        max_length=500, 
+        unique=True,
+        db_index=True,
     )
     url = models.URLField()
     title = models.CharField(
-        max_length=255, 
-        blank=True
+        max_length=300, 
+        blank=True,
+        null=True,
+        db_index=True,
     )
     description = models.TextField(
-        blank=True
+        max_length=1000,
+        blank=True,
+        null=True,
     )
     category = models.CharField(
-        max_length=100,
+        max_length=50,
         null=True,
         blank=True,
     )
@@ -30,9 +35,9 @@ class Images(models.Model):
         choices=STATUS_CHOICES, 
         default='pending'
     )
-    created_at = models.DateTimeField(
-        auto_now_add=True
-    )
+    download_count = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.title or self.image_id} ({self.status})"
@@ -44,13 +49,10 @@ class ImageKeywords(models.Model):
         related_name='keywords'
     )
     name = models.CharField(
-        max_length=80,
-        validators=[MinLengthValidator(1)],
-        null=True,
-        blank=True,
+        max_length=40,
+        validators=[MinLengthValidator(3)],
         db_index=True,
     )
 
     def __str__(self):
         return self.name
-    

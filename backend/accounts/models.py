@@ -1,20 +1,32 @@
 from django.db import models
 from django.core.validators import MinLengthValidator, RegexValidator
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from rest_framework_simplejwt.tokens import RefreshToken
-from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError as DjangoValidationError
+from accounts.utils.genders import GENDERS
+from accounts.utils.roles import ROLES
+from accounts.utils.image_upload import USER_DIRECTORY_PATH
+from accounts.services.user_id import GENERATE_USER_ID
+from core.utils import VALIDATE_IMAGE_EXTENSION, VALIDATE_IMAGE_SIZE, VALIDATE_EMAIL, VALIDATE_ALPHA, VALIDATE_PHONE_NUMBER, GENERATE_SLUG
 from accounts.managers import UserManager
-from accounts.utils import USER_DIRECTORY_PATH, ROLES, GENDERS
-from app.utils import validate_email, generate_slug, validate_alpha
+from django.utils.translation import gettext_lazy as _
 
 class User(AbstractBaseUser, PermissionsMixin):
+    user_id = models.CharField(
+        unique=True,
+        db_index=True,
+        max_length=9,
+        validators=[MinLengthValidator(9)],
+        editable=False,
+    )
     image = models.ImageField(
+        validators=[VALIDATE_IMAGE_EXTENSION, VALIDATE_IMAGE_SIZE],
         upload_to=USER_DIRECTORY_PATH,
         null=True,
         blank=True,
     )
     username = models.CharField(
         unique=True,
+        db_index=True,
         max_length=40,
         validators=[
             MinLengthValidator(3),
@@ -23,7 +35,6 @@ class User(AbstractBaseUser, PermissionsMixin):
                 message=_('Username can only contain letters, numbers, and underscores.'),
             ),
         ],
-        db_index=True,
     )
     slug = models.SlugField(
         unique=True,
@@ -32,37 +43,42 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     email = models.EmailField(
         unique=True,
-        validators=[MinLengthValidator(10), validate_email],
         db_index=True,
+        validators=[MinLengthValidator(10), VALIDATE_EMAIL],
     )
     first_name = models.CharField(
         max_length=20,
-        validators=[MinLengthValidator(3), validate_alpha],
-        blank=True,
         db_index=True,
+        validators=[MinLengthValidator(3), VALIDATE_ALPHA],
+        blank=True,
+        null=True,
     )
     last_name = models.CharField(
         max_length=20,
-        validators=[MinLengthValidator(3), validate_alpha],
-        blank=True,
         db_index=True,
+        validators=[MinLengthValidator(3), VALIDATE_ALPHA],
+        blank=True,
+        null=True,
     )
     number = models.CharField(
-        max_length=11,
-        validators=[MinLengthValidator(11)],
-        blank=True,
+        max_length=20,
         db_index=True,
+        validators=[MinLengthValidator(11), VALIDATE_PHONE_NUMBER],
+        blank=True,
+        null=True,
     )
     gender = models.CharField(
         max_length=10,
         choices=GENDERS,
         blank=True,
+        null=True,
     )
     role = models.CharField(
         max_length=10,
         choices=ROLES,
         default='user',
     )
+    
     terms_accepted = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -77,31 +93,30 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         ordering = ['-date_joined']
 
+    def __str__(self):
+        return self.username or self.email
+    
+    def clean(self):
+        if self.role == 'admin':
+            existing_admin = User.objects.filter(role='admin')
+            if self.pk:
+                existing_admin = existing_admin.exclude(pk=self.pk)
+            if existing_admin.exists():
+                raise DjangoValidationError(_('Only one admin is allowed.'))
+
     def save(self, *args, **kwargs):
-        if self.username:
-            base_slug = generate_slug(self.username)
-            slug = base_slug
-            i = 1
-            while User.objects.filter(slug=slug).exclude(pk=self.pk).exists():
-                slug = f"{base_slug}-{i}"
-                i += 1
-            self.slug = slug
+        if not self.user_id:
+            self.user_id = GENERATE_USER_ID(self.role)
+        if self.pk:
+            orig = User.objects.only("username").filter(pk=self.pk).first()
+            if orig and orig.username != self.username:
+                self.slug = GENERATE_SLUG(self.username)
+        else:
+            self.slug = GENERATE_SLUG(self.username)
+
         super().save(*args, **kwargs)
 
     def delete(self, using=None, keep_parents=False):
         if self.image:
             self.image.delete(save=False)
         super().delete(using=using, keep_parents=keep_parents)
-
-    def get_full_name(self):
-        return f"{self.first_name} {self.last_name}".strip()
-
-    def tokens(self):
-        refresh = RefreshToken.for_user(self)
-        return {
-            'refresh_token': str(refresh),
-            'access_token': str(refresh.access_token),
-        }
-
-    def __str__(self):
-        return self.username or self.email
