@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.core.validators import MinLengthValidator
 from images.utils.status import STATUS_CHOICES
+from core.utils import GENERATE_SLUG
 
 class Images(models.Model):
     user = models.ForeignKey(
@@ -15,10 +16,16 @@ class Images(models.Model):
     )
     url = models.URLField()
     title = models.CharField(
+        unique=True,
         max_length=300, 
         blank=True,
         null=True,
         db_index=True,
+    )
+    slug = models.SlugField(
+        unique=True,
+        max_length=350,
+        editable=False,
     )
     description = models.TextField(
         max_length=1000,
@@ -41,6 +48,16 @@ class Images(models.Model):
 
     def __str__(self):
         return f"{self.title or self.image_id} ({self.status})"
+    
+    def save(self, *args, **kwargs):
+        if self.pk:
+            orig = Images.objects.only("title").filter(pk=self.pk).first()
+            if orig and orig.title != self.title:
+                self.slug = GENERATE_SLUG(self.title)
+        else:
+            self.slug = GENERATE_SLUG(self.title)
+
+        super().save(*args, **kwargs)
 
 class ImageKeywords(models.Model):
     image = models.ForeignKey(

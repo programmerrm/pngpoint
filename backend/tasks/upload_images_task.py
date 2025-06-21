@@ -4,7 +4,7 @@ import logging
 from celery import shared_task
 from django.contrib.auth import get_user_model
 from images.models import Images, ImageKeywords
-from api.images.serializers.upload import UploadSerializer
+from api.images.serializers.image import ImageSerializer
 from images.services.cloudflare import UPLOAD_IMAGE_TO_CLOUDFLARE, GET_IMAGE_URL_FROM_CLOUDFLARE
 
 User = get_user_model()
@@ -55,7 +55,7 @@ def upload_images_task(user_id, image_data_list):
                     name=keyword
                 )
 
-            uploaded_images.append(UploadSerializer(image_obj).data)
+            uploaded_images.append(ImageSerializer(image_obj).data)
 
         except Exception as e:
             logger.error("Image upload failed: %s", e)

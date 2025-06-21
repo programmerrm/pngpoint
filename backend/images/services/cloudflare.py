@@ -7,7 +7,6 @@ logger = logging.getLogger(__name__)
 
 ALLOWED_VARIANTS = ['public',]
 
-
 def UPLOAD_IMAGE_TO_CLOUDFLARE(image_file):
     original_filename = getattr(image_file, "name", "upload.png")
 
@@ -77,8 +76,6 @@ def NUMBER_OF_IMAGE_DELETE_FROM_CLOUDFLARE(image_id):
         return {"success": False, "error": f"Request error: {str(e)}"}
     except Exception as e:
         return {"success": False, "error": f"Unexpected error: {str(e)}"}
-
-
 
 def DELETE_ALL_IMAGE_FROM_CLOUDFLARE():
     account_id = settings.CLOUDFLARE_ACCOUNT_ID
