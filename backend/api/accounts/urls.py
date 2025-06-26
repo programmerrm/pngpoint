@@ -1,6 +1,6 @@
 from django.urls import path
 from api.accounts.views.register import RegisterViewSet
-from api.accounts.views.login import LoginViewSet
+from api.accounts.views.login import UserLoginView, AdminLoginView
 
 urlpatterns = [
     path(
@@ -10,7 +10,12 @@ urlpatterns = [
     ),
     path(
         'user/login/',
-        LoginViewSet.as_view(),
+        UserLoginView.as_view(),
         name='login',
+    ),
+    path(
+        'admin/login/',
+        AdminLoginView.as_view(),
+        name='admin_login',
     ),
 ]

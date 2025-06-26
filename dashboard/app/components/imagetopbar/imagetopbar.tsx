@@ -1,4 +1,4 @@
-import { useAllImageDeleteMutation } from "~/redux/features/images/imagesDeletedApi";
+import { useAllImageDeleteMutation } from "~/redux/features/images/deletedApi";
 
 interface ImageTopBarProps {
     count: number;
@@ -7,9 +7,9 @@ interface ImageTopBarProps {
 }
 
 export default function ImageTopBar({ count, selectAll, onSelectAllChange }: ImageTopBarProps) {
-    const [ allImageDelete ] = useAllImageDeleteMutation();
+    const [allImageDelete] = useAllImageDeleteMutation();
     const handleAllImagesDeleted = async () => {
-        if(selectAll) {
+        if (selectAll) {
             try {
                 await allImageDelete().unwrap();
                 alert("All images deleted successfully!");

@@ -1,4 +1,5 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from django_filters.rest_framework import DjangoFilterBackend
 from permissions.admin import IsAdminUser
@@ -10,7 +11,6 @@ from images.pagination.pagination import ImagesPagination
 class TotalImagesViewSet(viewsets.ViewSet):
     permission_classes = [IsAdminUser]
     renderer_classes = [JSONRenderer]
-    throttle_classes = []
     filter_backends = [DjangoFilterBackend]
     filterset_class = ImageFilter
     pagination_class = ImagesPagination
@@ -23,3 +23,16 @@ class TotalImagesViewSet(viewsets.ViewSet):
         page = paginator.paginate_queryset(queryset, request, view=self)
         serializer = ImageSerializer(page, many=True)
         return paginator.get_paginated_response(serializer.data)
+    
+class TotalImagesLenghtView(viewsets.ViewSet):
+    permission_classes = [IsAdminUser]
+    renderer_classes = [JSONRenderer]
+
+    def list(self, request, *args, **kwargs):
+        total_length = Images.objects.count()
+        return Response({
+            'success': True,
+            'message': 'Total images lenght fetching successfully.',
+            'images_lenght': total_length,
+        }, status=status.HTTP_200_OK)
+    

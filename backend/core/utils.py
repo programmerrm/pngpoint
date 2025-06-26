@@ -64,8 +64,17 @@ def VALIDATE_ALPHA(value):
     if not value.isalpha():
         raise ValidationError(_('This field should only contain letters (a-z).'))
 
+# def GENERATE_SLUG(value):
+#     try:
+#         return slugify(value)
+#     except Exception as e:
+#         raise ValueError(f"Slug generation failed: {e}")
+import uuid
+
 def GENERATE_SLUG(value):
     try:
-        return slugify(value)
+        base_slug = slugify(value) if value else 'image'
+        unique_suffix = uuid.uuid4().hex[:6]
+        return f"{base_slug}-{unique_suffix}"
     except Exception as e:
         raise ValueError(f"Slug generation failed: {e}")

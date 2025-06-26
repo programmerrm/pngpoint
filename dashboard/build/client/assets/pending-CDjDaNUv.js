@@ -1,1 +1,0 @@
-import{w as n}from"./with-props-C6dPk52p.js";import{o as e}from"./chunk-D4RADZKF-CAWZMMw9.js";const i=n(function(){return e.jsx("div",{className:"flex flex-col flex-wrap px-10 py-3.5 w-full h-[82%] relative",children:e.jsx("h2",{children:"Total Pending Images"})})});export{i as default};

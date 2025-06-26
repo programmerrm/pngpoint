@@ -3,6 +3,8 @@ import TrendingTags from "~/components/trending_tags/trending_tags";
 import TrendingImages from "~/components/trending_images/trending_images";
 import HomeHeader from "~/components/header/home_header";
 import SearchingImage from "~/components/searching_image/searching_image";
+import Footer from "~/components/footer/footer";
+import Scrollbar from "~/components/scrollbar/scrollbar";
 
 export function meta({ }: Route.MetaArgs) {
     return [
@@ -18,6 +20,8 @@ export default function Index() {
             <SearchingImage />
             <TrendingImages />
             <TrendingTags />
+            <Footer />
+            <Scrollbar />
         </main>
     );
 }

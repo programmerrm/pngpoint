@@ -70,6 +70,21 @@ class ImageKeywords(models.Model):
         validators=[MinLengthValidator(3)],
         db_index=True,
     )
+    slug = models.SlugField(
+        unique=True,
+        max_length=350,
+        editable=False,
+    )
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        if self.pk:
+            orig = ImageKeywords.objects.only("name").filter(pk=self.pk).first()
+            if orig and orig.name != self.name:
+                self.slug = GENERATE_SLUG(self.name)
+        else:
+            self.slug = GENERATE_SLUG(self.name)
+
+        super().save(*args, **kwargs)

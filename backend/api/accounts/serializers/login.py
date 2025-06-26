@@ -39,6 +39,16 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError({
                 'email': _('User account is disabled.')
             })
+        
+        admin_login = self.context.get('admin_login', False)
+        if admin_login and not (user.is_staff or user.is_superuser):
+            raise serializers.ValidationError({
+                'email': _('User is not authorized as admin.')
+            })
+        if not admin_login and (user.is_staff or user.is_superuser):
+            raise serializers.ValidationError({
+                'email': _('Admin users cannot login here.')
+            })
 
         attrs['user'] = user
         return attrs

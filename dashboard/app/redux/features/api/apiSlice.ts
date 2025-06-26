@@ -23,7 +23,7 @@ const verifyAccessToken = async ( accessToken: string, api: any, extraOptions: a
             body: { token: accessToken },
         },
         api,
-        extraOptions
+        extraOptions,
     );
     return !(result.error && result.error.status === 401);
 };

@@ -115,8 +115,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100,
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '5/min',
-        'user': '10/min',
+        'anon': '5000/min',
+        'user': '1000/min',
     },
 }
 

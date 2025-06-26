@@ -1,12 +1,12 @@
-import type { AuthResponseType } from "~/types/authResponseType";
-import { apiSlice } from "../api/apiSlice";
 import { setAuth } from "./authSlice";
-import type { LoginPropsType } from "~/types/loginType";
+import { apiSlice } from "../api/apiSlice";
 import type { PasswordChangeType } from "~/types/passwordChangeType";
+import type { LoginPropsType } from "~/types/login/loginPropsType";
+import type { LoginResponseType } from "~/types/login/loginResponseType";
 
 export const authApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        addLogin: builder.mutation<AuthResponseType, LoginPropsType>({
+        addLogin: builder.mutation<LoginResponseType, LoginPropsType>({
             query: (data) => ({
                 url: "/accounts/admin/login/",
                 method: "POST",
@@ -16,10 +16,10 @@ export const authApi = apiSlice.injectEndpoints({
                 try {
                     const { data } = await queryFulfilled;
                     const authData = {
-                        admin: data.admin,
+                        admin: data.data.admin,
                         tokens: {
-                            access_token: data.tokens.access_token,
-                            refresh_token: data.tokens.refresh_token,
+                            access_token: data.data.tokens.access_token,
+                            refresh_token: data.data.tokens.refresh_token,
                         },
                     };
                     dispatch(setAuth(authData));

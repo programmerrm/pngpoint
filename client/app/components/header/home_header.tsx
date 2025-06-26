@@ -7,7 +7,7 @@ export default function HomeHeader() {
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-col flex-wrap justify-center items-center w-full">
                     <Link className="block w-fit" to={"/"}>
-                        <img className="w-56 h-auto" src={Logo} alt="" />
+                        <img className="w-56 h-auto" src={Logo} alt="png point" loading="lazy" decoding="async" />
                     </Link>
                 </div>
             </div>

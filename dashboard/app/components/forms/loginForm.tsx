@@ -1,11 +1,11 @@
 import React, { useState } from "react"
-import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
-import type { LoginPropsType } from "~/types/loginType";
-import { useAddLoginMutation } from "~/redux/features/auth/authApi";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { Field } from "../field/field";
 import { ReactIcons } from "~/lib/reactIcons";
+import { useAddLoginMutation } from "~/redux/features/auth/authApi";
+import type { LoginPropsType } from "~/types/login/loginPropsType";
 
 export const LoginForm: React.FC = () => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -18,7 +18,7 @@ export const LoginForm: React.FC = () => {
         try {
             await addLogin(formData).unwrap();
             toast.success("Login successfully");
-            navigate("/");
+            navigate("/dashboard/");
             reset();
         } catch (err: any) {
             const errorMessage = err?.data?.message || "Something went wrong";
@@ -26,7 +26,7 @@ export const LoginForm: React.FC = () => {
         }
     }
     return (
-        <form className="flex flex-col flex-wrap gap-y-5 mt-8 w-full text-white" onSubmit={handleSubmit(onSubmitForm)}>
+        <form className="flex flex-col flex-wrap gap-y-2.5 md:gap-y-5 mt-5 md:mt-8 w-full text-white" onSubmit={handleSubmit(onSubmitForm)}>
             <div className="flex flex-col flex-wrap gap-y-2.5 w-full">
                 <Field label={"Enter your email"} error={errors.email}>
                     <input
@@ -45,7 +45,7 @@ export const LoginForm: React.FC = () => {
                                 message: "Email must be at most 40 characters."
                             },
                         })}
-                        className="text-white placeholder:text-white text-base font-normal placeholder:text-base placeholder:font-normal py-3 px-3.5 border border-white rounded-xl"
+                        className="text-white placeholder:text-white text-sm md:text-base font-normal placeholder:text-sm md:placeholder:text-base placeholder:font-normal py-3 px-2.5 md:px-3.5 border border-white rounded-xl"
                         type="email"
                         name="email"
                         id="email"
@@ -69,7 +69,7 @@ export const LoginForm: React.FC = () => {
                                     message: "Password must be at most 15 characters."
                                 },
                             })}
-                            className="text-white placeholder:text-white text-base font-normal placeholder:text-base placeholder:font-normal py-3 px-3.5 border border-white rounded-xl"
+                            className="text-white placeholder:text-white text-sm md:text-base font-normal placeholder:text-sm md:placeholder:text-base placeholder:font-normal py-3 px-3.5 border border-white rounded-xl"
                             type={isShow ? "text" : "password"}
                             name="password"
                             id="password"
@@ -77,19 +77,19 @@ export const LoginForm: React.FC = () => {
                         />
                         <button className="absolute top-[58%] right-4 cursor-pointer z-50" type="button" onClick={() => setIsShow(prev => !prev)}>
                             {isShow ? (
-                                <IoMdEyeOff className="text-xl" />
+                                <IoMdEyeOff className="text-lg md:text-xl" />
                             ) : (
-                                <IoMdEye className="text-xl" />
+                                <IoMdEye className="text-lg md:text-xl" />
                             )}
                         </button>
                     </>
                 </Field>
             </div>
             <div className="flex flex-col flex-wrap w-fit">
-                <Link className="border-b-2 pb-0.5" to={"/"}>Forgot Password</Link>
+                <Link className="text-sm md:text-base font-medium border-b-2 pb-0.5" to={"/"}>Forgot Password</Link>
             </div>
             <div className="flex flex-col flex-wrap w-fit">
-                <button className="bg-black text-white text-base font-medium px-10 py-3.5 rounded-xl cursor-pointer" type="submit">
+                <button className="bg-black text-white text-sm md:text-base font-medium px-10 py-3.5 rounded-xl cursor-pointer" type="submit">
                     {isLoading ? "Loading..." : "Login"}
                 </button>
             </div>

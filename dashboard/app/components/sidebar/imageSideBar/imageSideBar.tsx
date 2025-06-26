@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router";
 import { useForm } from "react-hook-form";
-import { ReactIcons } from "~/lib/reactIcons";
-import { Field } from "~/components/field/field";
-import type { MetaDataResponseType, KeywordResponseType } from "~/types/metaDataResponseType";
-import { useNumberOfImageDeletMutation } from "~/redux/features/images/imagesDeletedApi";
-import { useUpdatedImageMutation } from "~/redux/features/images/imageUpdatedApi";
 import { useDispatch } from "react-redux";
-import { closeSidebar, clearSelectedMetadata } from "~/redux/features/imageSidebar/imageSideBarSlice";
+import { Link } from "react-router";
+import { Field } from "~/components/field/field";
+import { ReactIcons } from "~/lib/reactIcons";
+import { useNumberOfImageDeletMutation } from "~/redux/features/images/deletedApi";
+import { useUpdatedImageMutation } from "~/redux/features/images/updatedApi";
+import { clearSelectedMetadata, closeSidebar } from "~/redux/features/imageSidebar/imageSideBarSlice";
+import type { ImageTypeRespose, KeywordResponseType } from "~/types/images/imageType";
+import { MEDIA_URL } from "~/utils/api";
 
 type KeywordType = { id: number | null; name: string };
 
@@ -17,7 +18,7 @@ export default function ImageSideBar({
     selectedIds,
     setLoading,
 }: {
-    selectedMetadata: MetaDataResponseType;
+    selectedMetadata: ImageTypeRespose;
     selectedCount: number;
     selectedIds: number[];
     setLoading: (value: null | "update" | "delete") => void;
@@ -143,7 +144,7 @@ export default function ImageSideBar({
                     </button>
                 </div>
                 <div className="flex flex-col w-full">
-                    <img className="block w-full h-auto rounded" src={selectedMetadata?.url} alt={selectedMetadata?.title} />
+                    <img className="block w-full h-auto rounded" src={`${selectedMetadata?.url}`} alt={selectedMetadata?.title} />
                 </div>
                 <form className="flex flex-col gap-y-3.5 w-full" onSubmit={handleSubmit(onSubmitForm)}>
                     <Field label="Title" error={errors.title}>

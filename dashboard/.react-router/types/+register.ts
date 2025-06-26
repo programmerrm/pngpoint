@@ -12,13 +12,12 @@ declare module "react-router" {
 
 type Params = {
   "/": {};
-  "/upload-images": {};
-  "/total-images": {};
-  "/approved-images": {};
-  "/pending-images": {};
-  "/rejected-images": {};
-  "/profile": {};
-  "/chnage-password": {};
-  "/users": {};
   "/login": {};
+  "/dashboard": {};
+  "/dashboard/upload-images": {};
+  "/dashboard/total-images": {};
+  "/dashboard/approved-images": {};
+  "/*": {
+    "*": string;
+  };
 };

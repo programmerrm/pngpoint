@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useUpdatedImageMutation } from "~/redux/features/images/imageUpdatedApi";
-import { useNumberOfImageDeletMutation } from "~/redux/features/images/imagesDeletedApi";
-import type { MetaDataResponseType, KeywordResponseType } from "~/types/metaDataResponseType";
+import { Field } from "~/components/field/field";
+import { useNumberOfImageDeletMutation } from "~/redux/features/images/deletedApi";
+import { useUpdatedImageMutation } from "~/redux/features/images/updatedApi";
+import type { KeywordResponseType, MetaDataResponseType } from "~/types/metaDataResponseType";
+import { ContributorInfo } from "./contributorInfo";
 import { HeaderBar } from "./headerBar";
 import { ImagePreview } from "./imagePreview";
-import { Field } from "~/components/field/field";
 import { KeywordInput } from "./keywordInput";
-import { ContributorInfo } from "./contributorInfo";
 
 export type KeywordType = { id: number | null; name: string };
 

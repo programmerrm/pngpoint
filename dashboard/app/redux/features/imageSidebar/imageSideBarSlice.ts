@@ -1,9 +1,9 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { MetaDataResponseType } from '~/types/metaDataResponseType';
+import type { ImageTypeRespose } from '~/types/images/imageType';
 
 interface ImageSideBarState {
     sideBar: boolean;
-    selectedMetadata?: MetaDataResponseType;
+    selectedMetadata?: ImageTypeRespose;
 }
 
 const initialState: ImageSideBarState = {
@@ -26,7 +26,7 @@ const imageSideBarSlice = createSlice({
         },
         setSelectedMetadata: (
             state,
-            action: PayloadAction<MetaDataResponseType>
+            action: PayloadAction<ImageTypeRespose>
         ) => {
             state.selectedMetadata = action.payload;
         },

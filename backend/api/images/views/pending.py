@@ -1,4 +1,5 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from django_filters.rest_framework import DjangoFilterBackend
 from permissions.admin import IsAdminUser
@@ -10,7 +11,6 @@ from images.pagination.pagination import ImagesPagination
 class PendingImagesViewSet(viewsets.ViewSet):
     permission_classes = [IsAdminUser]
     renderer_classes = [JSONRenderer]
-    throttle_classes = []
     filter_backends = [DjangoFilterBackend]
     filterset_class = ImageFilter
     pagination_class = ImagesPagination
@@ -23,4 +23,16 @@ class PendingImagesViewSet(viewsets.ViewSet):
         page = paginator.paginate_queryset(queryset, request, view=self)
         serializer = ImageSerializer(page, many=True)
         return paginator.get_paginated_response(serializer.data)
+    
+class PendingImagesLenghtView(viewsets.ViewSet):
+    permission_classes = [IsAdminUser]
+    renderer_classes = [JSONRenderer]
+
+    def list(self, request, *args, **kwargs):
+        pending_length = Images.objects.filter(status='pending').count()
+        return Response({
+            'success': True,
+            'message': 'Pending images length fetched successfully.',
+            'images_length': pending_length,
+        }, status=status.HTTP_200_OK)
     

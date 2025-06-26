@@ -1,1 +1,0 @@
-import{w as t}from"./with-props-C6dPk52p.js";import{o as e}from"./chunk-D4RADZKF-CAWZMMw9.js";const s=t(function(){return e.jsx("div",{className:"flex flex-col flex-wrap px-10 py-3.5 w-full h-[82%] relative",children:e.jsx("h2",{children:"Total Rejected Images"})})});export{s as default};

@@ -10,7 +10,7 @@ export const Field:React.FC<FieldPropsType> = ({ label, children, htmlFor, error
     return (
         <React.Fragment>
             {label && (
-                <label className="text-base font-medium" htmlFor={id}>
+                <label className="text-sm md:text-base font-medium" htmlFor={id}>
                     {label}
                 </label>
             )}
