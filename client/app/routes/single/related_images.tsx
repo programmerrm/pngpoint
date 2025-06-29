@@ -3,7 +3,7 @@ import bgShape from "/images/bg-shape.jpg";
 import { ReactIcons } from "~/utils/reactIcons";
 import { SERVER_URL } from "~/utils/api";
 
-export default function RelatedImages({ images }) {
+export default function RelatedImages({ images }: any) {
     const { HiOutlineDownload } = ReactIcons;
 
     const handleDownloadImage = (id: string) => {
@@ -20,17 +20,16 @@ export default function RelatedImages({ images }) {
         <section className="relative top-0 left-0 right-0 py-5 w-full bg-[#FBFAFF]">
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-col flex-wrap gap-y-5 w-full">
-                    <h2 className="text-2xl font-semibold text-center uppercase">below are more related png files</h2>
+                    <h2 className="text-base md:text-2xl font-semibold text-center uppercase">below are more related png files</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-5 basis-full">
                         {images?.map((image: any) => {
                             return (
                                 <div className="block w-full h-full relative rounded-2xl border border-gray-300 shadow-sm group" key={image.id}>
 
                                     <Link
-                                        className="flex flex-col flex-wrap justify-center items-center w-full min-h-[350px] h-full z-50 relative overflow-hidden"
+                                        className="flex flex-col flex-wrap justify-center items-center w-full min-h-[200px] sm:min-h-[220px] md:min-h-[250px] lg:min-h-[350px] h-full z-50 relative overflow-hidden"
                                         to={`/image/${image.slug}/`}
                                     >
-
                                         <div className="rounded-2xl bg-center bg-no-repeat bg-cover opacity-0 absolute top-0 right-0 left-0 w-full h-full group-hover:opacity-100 transition-all duration-300 ease-in-out" style={{ backgroundImage: `url(${bgShape})` }}></div>
 
                                         <div className="flex flex-col flex-wrap justify-center items-center z-50">
