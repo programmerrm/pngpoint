@@ -1,1 +1,0 @@
-import{a as t}from"./apiSlice-B5w1slPB.js";const a=t.injectEndpoints({endpoints:e=>({getTotalImages:e.query({query:()=>"/images/total/"}),getTotalImagesLength:e.query({query:()=>"/images/total-images-lenght/"})})}),{useGetTotalImagesLengthQuery:o,useGetTotalImagesQuery:g}=a;export{g as a,o as u};
