@@ -1,16 +1,9 @@
 version: "3.9"
 
 services:
-  client:
+  frontend:
     build:
-      context: ./client
-      dockerfile: Dockerfile
-    networks:
-      - pngnet
-
-  dashboard:
-    build:
-      context: ./dashboard
+      context: ./frontend
       dockerfile: Dockerfile
     networks:
       - pngnet
@@ -52,16 +45,12 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - client
-      - dashboard
+      - frontend
       - backend
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./backend/static:/backend/static:ro
       - ./backend/media:/backend/media:ro
-      - ./client/build/client:/usr/share/nginx/html:ro
-      - ./dashboard/build/dashboard:/usr/share/nginx/html/dashboard:ro
-
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     networks:
       - pngnet
 
