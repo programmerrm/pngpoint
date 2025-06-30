@@ -14,6 +14,6 @@ RUN apt-get update && apt-get install -y \
     && pip install -r requirements.txt \
     && apt-get remove -y gcc
 
-COPY ./backend .
+COPY . .
 
 CMD ["gunicorn", "backend.wsgi:application", "--bind", "0.0.0.0:8000"]
