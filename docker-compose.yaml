@@ -72,11 +72,13 @@ services:
       dockerfile: Dockerfile.client
     ports:
       - "5173:5173"
-    volumes:
-      - ./client:/client
-      - ./client/node_modules:/client/node_modules
     environment:
       - HOST=0.0.0.0
+    volumes:
+      - ./client:/client
+      - /client/node_modules
+    networks:
+      - pngnet
 
   dashboard:
     build:
@@ -84,11 +86,13 @@ services:
       dockerfile: Dockerfile.dashboard
     ports:
       - "5174:5173"
-    volumes:
-      - ./dashboard:/dashboard
-      - ./dashboard/node_modules:/dashboard/node_modules
     environment:
       - HOST=0.0.0.0
+    volumes:
+      - ./dashboard:/dashboard
+      - /dashboard/node_modules
+    networks:
+      - pngnet
 
   backend:
     build:
@@ -101,19 +105,17 @@ services:
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
-      - CLOUDFLARE_ACCOUNT_ID=${CLOUDFLARE_ACCOUNT_ID}
-      - CLOUDFLARE_ACCOUNT_HASH=${CLOUDFLARE_ACCOUNT_HASH}
-      - CLOUDFLARE_API_TOKEN=${CLOUDFLARE_API_TOKEN}
-      - CLOUDFLARE_IMAGE_DOMAIN=${CLOUDFLARE_IMAGE_DOMAIN}
-      - CLOUDFLARE_ENDPOINT=${CLOUDFLARE_ENDPOINT}
-      - CLOUDFLARE_EMAIL=${CLOUDFLARE_EMAIL}
     depends_on:
       - redis
+    networks:
+      - pngnet
 
   redis:
     image: redis:7-alpine
     ports:
       - "6379:6379"
+    networks:
+      - pngnet
 
   nginx:
     image: nginx:1.24
@@ -127,3 +129,10 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ./backend/static:/backend/static
       - ./backend/media:/backend/media
+    networks:
+      - pngnet
+
+networks:
+  pngnet:
+    driver: bridge
+
