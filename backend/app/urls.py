@@ -5,7 +5,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 
-BASE_API = 'v1'
+BASE_API = 'api/v1'
 
 urlpatterns = [
     path(f'{BASE_API}/images/', include('api.images.urls')),
