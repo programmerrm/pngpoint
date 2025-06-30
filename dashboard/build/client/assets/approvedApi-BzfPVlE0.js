@@ -1,0 +1,1 @@
+import{a as p}from"./apiSlice-B5w1slPB.js";const a=p.injectEndpoints({endpoints:e=>({getApprovedImages:e.query({query:()=>"/images/approved/"}),getApprovedImagesLength:e.query({query:()=>"/images/approved-images-lenght/"})})}),{useGetApprovedImagesLengthQuery:r,useGetApprovedImagesQuery:o}=a;export{o as a,r as u};

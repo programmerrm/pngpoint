@@ -1,0 +1,77 @@
+{
+  "_chunk-NL6KNZEE-Dx2fKGqU.js": {
+    "file": "assets/chunk-NL6KNZEE-Dx2fKGqU.js",
+    "name": "chunk-NL6KNZEE"
+  },
+  "_footer-BZ2Fz-hl.js": {
+    "file": "assets/footer-BZ2Fz-hl.js",
+    "name": "footer",
+    "imports": [
+      "_chunk-NL6KNZEE-Dx2fKGqU.js",
+      "_getImageSlice-BK6TRAtS.js"
+    ]
+  },
+  "_getImageSlice-BK6TRAtS.js": {
+    "file": "assets/getImageSlice-BK6TRAtS.js",
+    "name": "getImageSlice",
+    "imports": [
+      "_chunk-NL6KNZEE-Dx2fKGqU.js"
+    ]
+  },
+  "_index-ZamSYGfs.js": {
+    "file": "assets/index-ZamSYGfs.js",
+    "name": "index",
+    "imports": [
+      "_chunk-NL6KNZEE-Dx2fKGqU.js"
+    ]
+  },
+  "app/root.tsx?__react-router-build-client-route": {
+    "file": "assets/root-m98rLzJu.js",
+    "name": "root",
+    "src": "app/root.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_chunk-NL6KNZEE-Dx2fKGqU.js",
+      "_getImageSlice-BK6TRAtS.js"
+    ],
+    "css": [
+      "static/other/root-MUSilao8.css"
+    ]
+  },
+  "app/routes/home/index.tsx?__react-router-build-client-route": {
+    "file": "assets/index-Df0l1kb4.js",
+    "name": "index",
+    "src": "app/routes/home/index.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_chunk-NL6KNZEE-Dx2fKGqU.js",
+      "_footer-BZ2Fz-hl.js",
+      "_getImageSlice-BK6TRAtS.js",
+      "_index-ZamSYGfs.js"
+    ],
+    "css": [
+      "static/other/index-DncTmDE-.css"
+    ]
+  },
+  "app/routes/single/single.tsx?__react-router-build-client-route": {
+    "file": "assets/single-BRoaCJit.js",
+    "name": "single",
+    "src": "app/routes/single/single.tsx?__react-router-build-client-route",
+    "isEntry": true,
+    "imports": [
+      "_chunk-NL6KNZEE-Dx2fKGqU.js",
+      "_footer-BZ2Fz-hl.js",
+      "_getImageSlice-BK6TRAtS.js"
+    ]
+  },
+  "node_modules/@react-router/dev/dist/config/defaults/entry.client.tsx": {
+    "file": "assets/entry.client-B2rjFxjV.js",
+    "name": "entry.client",
+    "src": "node_modules/@react-router/dev/dist/config/defaults/entry.client.tsx",
+    "isEntry": true,
+    "imports": [
+      "_chunk-NL6KNZEE-Dx2fKGqU.js",
+      "_index-ZamSYGfs.js"
+    ]
+  }
+}
