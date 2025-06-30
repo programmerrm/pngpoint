@@ -23,5 +23,5 @@ DATABASES = {
 
 CSRF_TRUSTED_ORIGINS = ['https://pngpoint.com']
 
-SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'] = timedelta(min=5)
+SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'] = timedelta(minutes=5)
 SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'] = timedelta(days=1)
