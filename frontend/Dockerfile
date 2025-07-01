@@ -30,7 +30,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # 👉 Copy the built static files from build stage to Nginx’s HTML folder
-COPY --from=build /app/build/client /usr/share/nginx/html
+COPY --from=build /app/build /usr/share/nginx/html
 
 # 👉 Expose port 80 (for serving HTTP traffic)
 EXPOSE 80
