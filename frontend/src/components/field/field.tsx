@@ -1,5 +1,5 @@
 import React from "react"
-import type { FieldPropsType } from "~/types/fieldType";
+import type { FieldPropsType } from "../../types/fieldType";
 
 export const Field:React.FC<FieldPropsType> = ({ label, children, htmlFor, error }) => {
     const getChildId = (children: any) => {

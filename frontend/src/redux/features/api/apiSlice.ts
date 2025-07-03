@@ -10,8 +10,6 @@ export const apiSlice = createApi({
     endpoints: () => ({}),
 });
 
-
-
 // const baseQuery = fetchBaseQuery({
 //     baseUrl: SERVER_URL,
 //     prepareHeaders: (headers, api) => {

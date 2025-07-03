@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Field } from "../field/field";
 import { ReactIcons } from "../../utils/reactIcons";
-import type { LoginPropsType } from "../../types/auth/LoginPropsType";
+import type { LoginPropsType } from "../../types/auth/loginPropsType";
 
 export const LoginForm: React.FC = () => {
     const [isShow, setIsShow] = useState<boolean>(false);
