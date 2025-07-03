@@ -7,13 +7,13 @@ import TrendingTags from "../../components/trending_tags/trending_tags";
 
 export default function Home() {
     return (
-        <main className="relative top-0 left-0 right-0 w-full">
+        <section className="relative top-0 left-0 right-0 w-full">
             <HomeHeader />
             <SearchingImage />
             <TrendingImages />
             <TrendingTags />
             <Footer />
             <Scrollbar />
-        </main>
+        </section>
     );
 }

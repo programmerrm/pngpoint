@@ -61,6 +61,7 @@ export default function Single() {
     };
 
     const handleDownloadImage = (id: string) => {
+        console.log('id : ', id);
         const url = `${SERVER_URL}/images/download/${id}/`;
         const link = document.createElement('a');
         link.href = url;
@@ -149,7 +150,7 @@ export default function Single() {
                                 </div>
                             </div>
 
-                            <button className="flex flex-row flex-wrap items-center gap-x-2.5 w-fit py-3 md:py-3.5 px-4 md:px-5 cursor-pointer text-sm md:tyext-base text-white bg-[#0077A2] rounded" type="button" onClick={() => handleDownloadImage(image.id)}>
+                            <button className="flex flex-row flex-wrap items-center gap-x-2.5 w-fit py-3 md:py-3.5 px-4 md:px-5 cursor-pointer text-sm md:tyext-base text-white bg-[#0077A2] rounded" type="button" onClick={() => handleDownloadImage(image.image_id)}>
                                 <HiOutlineDownload className="text-xl md:text-2xl" />
                                 <span>Free Download ({formatFileSize(fileSize)})</span>
                             </button>

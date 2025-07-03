@@ -5,6 +5,9 @@ import { GoArrowDown } from "react-icons/go";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { PiImageSquareLight } from "react-icons/pi";
 import { AiOutlineFileText } from "react-icons/ai";
+import { FaLongArrowAltLeft } from "react-icons/fa";
+import { IoMdEye } from "react-icons/io";
+import { IoMdEyeOff } from "react-icons/io";
 
 export const ReactIcons = {
     HiOutlineDownload,
@@ -17,4 +20,7 @@ export const ReactIcons = {
     IoInformationCircleOutline,
     PiImageSquareLight,
     AiOutlineFileText,
+    FaLongArrowAltLeft,
+    IoMdEye,
+    IoMdEyeOff,
 }

@@ -40,6 +40,9 @@ export default function Footer() {
                             <li className=" list-disc">
                                 <Link className="block w-fit text-sm xl:text-base font-normal uppercase" to={"/"}>latest</Link>
                             </li>
+                            <li className=" list-disc">
+                                <Link className="block w-fit text-sm xl:text-base font-normal uppercase" to={"/contributor/auth/"}>contributor login</Link>
+                            </li>
                         </ul>
                     </div>
                     <div className="flex flex-col flex-wrap w-full">
